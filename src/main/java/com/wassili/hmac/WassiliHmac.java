@@ -32,13 +32,49 @@ public class WassiliHmac {
 			mac.init(restorSecretKey);//初始化mac
 			byte[] hmacMD5Bytes = mac.doFinal(src.getBytes());//执行摘要
 			System.out.println("jdk hamcMD5: " + Hex.encodeHexString(hmacMD5Bytes));
-					
+			System.out.println("jdk hamcMD5: " + byte2hex(hmacMD5Bytes));
+			System.out.println("jdk hamcMD5: " + byte2hex1(hmacMD5Bytes));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
+	/**
+	 * 对bytes进行16进制转换
+	 * @param bytes
+	 * @return
+	 */
+	public static String byte2hex(byte[] bytes) {
+		StringBuilder sign = new StringBuilder();
+		for (int i = 0; i < bytes.length; i++) {
+			String hex = Integer.toHexString(bytes[i] & 0xFF);
+			if (hex.length() == 1) {
+				sign.append("0");
+			}
+			sign.append(hex);
+		}
+		return sign.toString();
+	}
+	
+	/**
+	 * 对bytes进行16进制转换并且转换大写
+	 * @param bytes
+	 * @return
+	 */
+	public static String byte2hex1(byte[] bytes) {
+		StringBuilder sign = new StringBuilder();
+		for (int i = 0; i < bytes.length; i++) {
+			String hex = Integer.toHexString(bytes[i] & 0xFF);
+			if (hex.length() == 1) {
+				sign.append("0");
+			}
+			sign.append(hex.toUpperCase());
+		}
+		return sign.toString();
+	}
+	
 	
 	public static void bcHmacMD5() {
 		HMac hMac = new HMac(new MD5Digest());
